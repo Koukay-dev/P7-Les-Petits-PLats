@@ -594,28 +594,16 @@ video {
   width: 25%;
 }
 
+.w-\[55\%\] {
+  width: 55%;
+}
+
 .w-full {
   width: 100%;
 }
 
 .w-screen {
   width: 100vw;
-}
-
-.w-2\/4 {
-  width: 50%;
-}
-
-.w-4\/5 {
-  width: 80%;
-}
-
-.w-8\/12 {
-  width: 66.666667%;
-}
-
-.w-\[55\%\] {
-  width: 55%;
 }
 
 .flex-row {
@@ -652,26 +640,6 @@ video {
 
 .font-anton {
   font-family: Anton, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-}
-
-.text-5xl {
-  font-size: 3rem;
-  line-height: 1;
-}
-
-.text-5xl\/loose {
-  font-size: 3rem;
-  line-height: 2;
-}
-
-.text-5xl\/8 {
-  font-size: 3rem;
-  line-height: 2rem;
-}
-
-.text-5xl\/10 {
-  font-size: 3rem;
-  line-height: 2.5rem;
 }
 
 .text-5xl\/normal {

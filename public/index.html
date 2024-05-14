@@ -13,29 +13,41 @@
         <script type="module" src="index.js"></script>
         <title>Les Petits Plats</title>
     </head>
-    <body>
-        <header class="bg-black relative w-screen">
-            <img
-                class="absolute top-0 left-0 z-0 w-full"
-                src="assets/img/header-bg.png"
-                alt="Bol de nouilles"
-            />
-            <div class="relative z-10">
-                <a class="flex flex-row px-16 py-14 w-1/4" href="./">
-                    <img
-                        src="assets/img/logo/lespetitsplats.svg"
-                        alt="Main page"
-                    />
-                    <img
-                        class="px-3 self-end"
-                        src="assets/img/logo/circle.svg"
-                        alt="circle"
-                    />
-                </a>
-                <h1 class="text-pale-yellow text-center text-5xl/normal font-anton mt-32 w-[55%] m-auto">
-                    CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET
-                    DÉLICIEUSES
-                </h1>
+    <body class="bg-[#EDEDED]">
+        <header class="bg-hero-banner bg-no-repeat bg-cover bg-center w-screen min-h-[700px] h-full">
+            <a class="flex flex-row px-16 py-14 w-1/4" href="./">
+                <img src="assets/img/logo/lespetitsplats.svg" alt="Main page" />
+                <img
+                    class="px-3 self-end"
+                    src="assets/img/logo/circle.svg"
+                    alt="circle"
+                />
+            </a>
+            <h1
+                class="text-theme-yellow text-center text-5xl/normal font-anton mt-32 w-[55%] m-auto"
+            >
+                CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET
+                DÉLICIEUSES
+            </h1>
+            <div class="bg-white m-auto w-8/12 flex p-2.5 rounded-11">
+                <input
+                    class="no-outline w-full ml-"
+                    type="text"
+                    name="main-search"
+                    placeholder="Rechercher une recette, un ingrédient, ..."
+                    id=""
+                />
+                <div
+                    class="group/button relative bg-theme-black hover:bg-theme-yellow ease-in-out size-12 rounded-10"
+                >
+                    <span
+                        class="group-hover/button:border-black absolute top-2.5 left-2 block size-5 border border-white rounded-full"
+                    ></span>
+                    <span
+                        class="group-hover/button:border-black absolute bottom-2 right-1.5 block size-3 border-b border-white origin-right rotate-45 rounded-1"
+                    ></span>
+                    &nbsp;
+                </div>
             </div>
         </header>
         <main></main>

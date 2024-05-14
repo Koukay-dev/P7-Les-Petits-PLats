@@ -7,12 +7,21 @@ module.exports = {
   theme: {
     extend: {
       colors:{
-        'pale-yellow' : '#FFD15B'
+        'theme-yellow' : '#FFD15B',
+        'theme-black' : '#1B1B1B',
+        'theme-grey' :  '#7A7A7A'
       },
       fontFamily: {
         'sans': ['Manrope', ...defaultTheme.fontFamily.sans],
         'anton':['Anton', ...defaultTheme.fontFamily.sans]
       },
+      borderRadius:{
+        '10' : '10px',
+        '11' : '11px'
+      },
+      backgroundImage:{
+        'hero-banner' : "url('../assets/img/header-bg.png')",
+      }
     },
   },
   plugins: [],

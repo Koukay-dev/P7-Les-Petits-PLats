@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@supports selector(div:focus-visible) {
+    /* uniquement au clic/tap focus */
+    .no-outline:focus:not(:focus-visible) {
+        outline: 1px dashed hotpink;
+    }
+    /* uniquement au focus clavier */
+    .no-outline:focus-visible {
+        outline-color: transparent;
+    }
+}

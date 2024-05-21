@@ -17,13 +17,23 @@ module.exports = {
       },
       borderRadius:{
         '10' : '10px',
-        '11' : '11px'
+        '11' : '11px',
+        '14' : '14px',
+        'recipe' : '21px'
       },
       backgroundImage:{
         'hero-banner' : "url('../assets/img/header-bg.png')",
-      }
+      },
+      boxShadow:{
+        'theme' : '0px 4px 34px 30px rgba(0, 0, 0, 0.04)'
+      },
+      letterSpacing:{
+        'subtitle' : '1.08px'
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+  ],
 }
 

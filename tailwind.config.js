@@ -9,7 +9,8 @@ module.exports = {
       colors:{
         'theme-yellow' : '#FFD15B',
         'theme-black' : '#1B1B1B',
-        'theme-grey' :  '#7A7A7A'
+        'theme-grey' :  '#7A7A7A',
+        'theme-light-grey' : '#C6C6C6',
       },
       fontFamily: {
         'sans': ['Manrope', ...defaultTheme.fontFamily.sans],
@@ -30,6 +31,9 @@ module.exports = {
       letterSpacing:{
         'subtitle' : '1.08px'
       },
+      rotate:{
+        '43' : '43deg'
+      }
     },
   },
   plugins: [

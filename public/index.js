@@ -1,7 +1,8 @@
 import { recipes } from "./data/recipe.js" 
 import { Recipe }  from "./scripts/models/Recipe.js" 
 import { RecipeCard } from "./scripts/template/RecipeCard.js"
-import { SearchBar } from "./scripts/template/SearchBar.js"
+import { SearchBarUtils } from "./scripts/utils/SearchBarUtils.js"
+import { FiltersUtils } from "./scripts/utils/FiltersUtils.js"
 
 
 class RecipesApp {
@@ -10,6 +11,7 @@ class RecipesApp {
         this._recipeSection = document.getElementById('recipes-main')
         this._recipeCount = document.getElementById('recipe-count')
         this._searchBars = document.querySelectorAll('.search-bar')
+        this._filters = document.querySelectorAll('.filterSearch')
     }
 
     main(){
@@ -23,13 +25,20 @@ class RecipesApp {
             fragment.appendChild(recipeCard.createThumbnail());
         });
         this._addSearchBarsEvent()
+        this._addFiltersEvent()
         // Ajouter le fragment au DOM en une seule opération
         this._recipeSection.appendChild(fragment);
     }
 
     _addSearchBarsEvent(){
         this._searchBars.forEach((searchBar) => {
-            new SearchBar(searchBar)
+            new SearchBarUtils(searchBar)
+        })
+    }
+
+    _addFiltersEvent(){
+        this._filters.forEach((filter) => {
+            new FiltersUtils(filter)
         })
     }
 

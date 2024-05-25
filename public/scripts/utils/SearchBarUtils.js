@@ -1,11 +1,12 @@
-import { DomBaseClass } from "./DomBaseClass.js";
+import { DomBaseClass } from "../template/DomBaseClass.js";
 
-export class SearchBar extends DomBaseClass{
+export class SearchBarUtils extends DomBaseClass{
     constructor(searchBar){
         super()
         this._searchBar = searchBar
         this._input = this._searchBar.querySelector('input')
         this._inputCross = this._searchBar.querySelector('.input-cross')
+        this._inputCrossActive = false
         this.init()
     }
 
@@ -27,6 +28,9 @@ export class SearchBar extends DomBaseClass{
     _showInputCross(){
         if(this._input.value != '' && this._inputCross.classList.contains('hidden')){
            this._inputCross.classList.remove('hidden')
+           this._inputCrossActive = true
+        } else if(this._inputCrossActive && this._input.value == ''){
+            this._inputCross.classList.add('hidden')
         }
     }
 }

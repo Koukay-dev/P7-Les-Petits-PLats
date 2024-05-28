@@ -58,13 +58,13 @@
         <main class="mx-32 my-7">
             <nav class="w-full flex justify-between">
                 <section class="flex">
-                    <div class="filterSearch cursor-pointer relative w-48 p-4 mr-16 bg-white rounded-11" data-filterType='ingredients'>
+                    <div class="filterSearch cursor-pointer relative w-48 p-4 mr-16 bg-white rounded-11">
                         <div class="filterOpeningTrigger flex justify-between">
                             <span>Ingrédients</span>
                             <img src="./assets/img/logo/arrow-down.svg" alt="Arrow Down"/>
                         </div>
                         <div class="filterOpenContent absolute left-0 z-10 w-48 p-4 pt-0 mr-16 bg-white rounded-11 hidden">
-                            <div class="border my-4 border-theme-light-grey rounded-sm w-full flex justify-between items-center search-bar">
+                            <div class="border my-4 border-theme-light-grey rounded-sm w-full flex justify-between items-center search-bar" data-filtertype='ingredients'>
                                 <input
                                     class="text-sm ml-2 text-theme-grey no-outline h-5 w-8/12 caret-theme-light-grey"
                                     type="text"
@@ -86,13 +86,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="filterSearch cursor-pointer relative w-48 p-4 mr-16 bg-white rounded-11" data-filterType='appliances'>
+                    <div class="filterSearch cursor-pointer relative w-48 p-4 mr-16 bg-white rounded-11">
                         <div class="filterOpeningTrigger flex justify-between">
                             <span>Appareils</span>
                             <img src="./assets/img/logo/arrow-down.svg" alt="Arrow Down"/>
                         </div>
                         <div class="filterOpenContent absolute left-0 z-10 w-48 p-4 pt-0 mr-16 bg-white rounded-11 hidden">
-                            <div class="border my-4 border-theme-light-grey rounded-sm w-full flex justify-between items-center search-bar">
+                            <div class="border my-4 border-theme-light-grey rounded-sm w-full flex justify-between items-center search-bar" data-filtertype='appliances'>
                                 <input
                                     class="text-sm ml-2 text-theme-grey no-outline h-5 w-8/12 caret-theme-light-grey"
                                     type="text"
@@ -114,13 +114,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="filterSearch cursor-pointer relative w-48 p-4 mr-16 bg-white rounded-11" data-filterType='ustensils'>
+                    <div class="filterSearch cursor-pointer relative w-48 p-4 mr-16 bg-white rounded-11">
                         <div class="filterOpeningTrigger flex justify-between">
                             <span>Ustensiles</span>
                             <img src="./assets/img/logo/arrow-down.svg" alt="Arrow Down"/>
                         </div>
                         <div class="filterOpenContent absolute left-0 z-10 w-48 p-4 pt-0 mr-16 bg-white rounded-11 hidden">
-                            <div class="border my-4 border-theme-light-grey rounded-sm w-full flex justify-between items-center search-bar">
+                            <div class="border my-4 border-theme-light-grey rounded-sm w-full flex justify-between items-center search-bar" data-filtertype='ustensils'>
                                 <input
                                     class="text-sm ml-2 text-theme-grey no-outline h-5 w-8/12 caret-theme-light-grey"
                                     type="text"
@@ -149,6 +149,8 @@
                     >1500 recettes</span
                 >
             </nav>
+            <section id='appliedFilters'>
+            </section>
             <section
                 id="recipes-main"
                 class="grid grid-cols-4 gap-y-16 gap-x-14 mt-14"

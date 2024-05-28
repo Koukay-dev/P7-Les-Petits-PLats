@@ -31,7 +31,9 @@ export class SearchEngine {
     // ========= Public =========
 
 
-    
+    resetCurrentRecipes(){
+        this._currentRecipes = this._recipes
+    }
 
     addFilter(filter){
         if(!this._appliedFilter.includes(filter.toLowerCase())){
@@ -63,7 +65,7 @@ export class SearchEngine {
             )
             return nameMatch || descriptionMatch || ingredientsMatch
         })
-        console.log(this)
+        return this._currentRecipes
     }
 
     
@@ -73,7 +75,7 @@ export class SearchEngine {
 
         // initialisation de la liste des filtres
     _initFiltersList() {
-        this._recipes.forEach((recipe) => {
+        this._currentRecipes.forEach((recipe) => {
             this._updateIngredientsFilters(recipe)
             this._updateApplianceFilters(recipe)
             this._updateUstensilsFilters(recipe)
@@ -112,9 +114,5 @@ export class SearchEngine {
                 return ingredientsMatch || applianceMatch || ustensilMatch
             })          
         })
-    }
-    
-    _resetCurrentRecipes(){
-        this._currentRecipes = this._recipes
     }
 }

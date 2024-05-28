@@ -1,5 +1,14 @@
 export class Filters{
-    constructor(){
+    constructor(wrapper){
+        this._wrapper = wrapper
         this.filters = []
+    }
+
+    addFilter(){
+
+    }
+
+    removeFilter(){
+
     }
 }

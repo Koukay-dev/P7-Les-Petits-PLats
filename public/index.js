@@ -3,6 +3,7 @@ import { Recipe }  from "./scripts/models/Recipe.js"
 import { RecipeCard } from "./scripts/template/RecipeCard.js"
 import { SearchBarUtils } from "./scripts/utils/SearchBarUtils.js"
 import { FiltersUtils } from "./scripts/utils/FiltersUtils.js"
+import { SearchEngine } from "./scripts/search/SearchEngine.js"
 
 
 class RecipesApp {
@@ -16,6 +17,9 @@ class RecipesApp {
 
     main(){
 
+         const testEngine = new SearchEngine(this._recipes)
+         testEngine.search('coco')
+         
         const fragment = document.createDocumentFragment();
         var recipesFound = this._recipes.length
         this._updateRecipeNumber(recipesFound)

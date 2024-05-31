@@ -12,7 +12,7 @@ class RecipesApp {
         this._recipeSection = document.getElementById('recipes-main')
         this._recipeCount = document.getElementById('recipe-count')
         this._searchBars = document.querySelectorAll('.search-bar')
-        this._filters = document.querySelectorAll('.filterSearch')
+        this._filtersDOM = document.querySelectorAll('.filterSearch')
         this._appliedFilterWrapper = document.getElementById('appliedFilters')
         this._search = new Search(this._recipes, this._searchBars, this._appliedFilterWrapper)
     }
@@ -40,24 +40,14 @@ class RecipesApp {
     }
 
 
-
     _addSearchBarsEvent(){
+
         this._searchBars.forEach(searchBar => {
 
             new SearchBarUtils(searchBar)
-            var input = searchBar.querySelector('input')
-
-            if(searchBar.dataset.filtertype){ // Filtres
-
-                input.addEventListener('input', () => {
-                    this._updateDomRecipes(this._search.filterSearch(input.value, searchBar.dataset.filterType))
-                })
-                searchBar.querySelector('.input-cross').addEventListener('click',() => {
-                    this._updateDomRecipes(this._search.filterSearch('', searchBar.dataset.filterType))
-                })
-
-            } else{ // Recherche principale
-
+            
+            if(!searchBar.dataset.filtertype){ // Recherche principale
+                const input = searchBar.querySelector('input')
                 input.addEventListener('input',()=>{
                     if(input.value.length >= 3){
                         this._updateDomRecipes(this._search.search(input.value))
@@ -74,8 +64,15 @@ class RecipesApp {
     }
 
     _addFiltersEvent(){
-        this._filters.forEach((filter) => {
-            new FiltersUtils(filter)
+        this._filtersDOM.forEach((filterDOM) => {
+            new FiltersUtils(filterDOM)
+
+            const searchBar  = filterDOM.querySelector('.search-bar')
+            const input = searchBar.querySelector('input')
+            var filterType = searchBar.dataset.filtertype
+        
+            input.addEventListener('input', () => this._search.filterSearch(input.value, filterDOM, filterType))
+            searchBar.querySelector('.input-cross').addEventListener('click',() => this._search.filterSearch('', filterDOM, filterType))
         })
     }
 

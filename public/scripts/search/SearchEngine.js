@@ -18,15 +18,17 @@ export class SearchEngine {
     }
 
     // ========= Getters =========
+    get currentRecipes(){
+        return this._currentRecipes
+    }
 
-    get appliedFilter(){
+    get appliedFilters(){
         return this._appliedFilter
     }
 
-    getFiltersbyType(type){
-        return this._filters[type]
+    get allFilters(){
+        return this._filters
     }
-
 
     // ========= Public =========
 
@@ -44,7 +46,7 @@ export class SearchEngine {
     }
 
     removeFilter(filterToRemove){
-        this._appliedFilter.filter((appliedFilter) => appliedFilter !== filterToRemove)
+        this._appliedFilter = this._appliedFilter.filter((appliedFilter) => appliedFilter !== filterToRemove)
 
         if(this._appliedFilter.length === 0){ //Mets à jour this._currentRecipes
             this.resetCurrentRecipes()
@@ -82,23 +84,28 @@ export class SearchEngine {
         })
     }
 
+    _alreadyIncludedinList(list, stringToCheck){ // Check pour ne pas avoir de doublons à cause des majuscules
+        return list.some((item) => item.toLowerCase() === stringToCheck.toLowerCase())
+    }
+
     _updateIngredientsFilters(recipe) {
         recipe.ingredients.forEach((ingredient) => {
-            if (!this._filtersIngredients.includes(ingredient.ingredient)) {
+            if (!this._alreadyIncludedinList(this._filtersIngredients, ingredient.ingredient)) {
                 this._filtersIngredients.push(ingredient.ingredient)
             }
         })
     }
 
     _updateApplianceFilters(recipe) {
-        if (!this._filtersAppliance.includes(recipe.appliance)) {
-            this._filtersAppliance.push(recipe.appliance)
+        const appliance = recipe.appliance
+        if (!this._alreadyIncludedinList(this._filtersAppliance, appliance)) {
+            this._filtersAppliance.push(appliance)
         }
     }
 
     _updateUstensilsFilters(recipe) {
         recipe.ustensils.forEach((ustensil) => {
-            if (!this._filtersUstensils.includes(ustensil)) {
+            if (!this._alreadyIncludedinList(this._filtersUstensils, ustensil)) {
                 this._filtersUstensils.push(ustensil)
             }
         })
@@ -108,7 +115,7 @@ export class SearchEngine {
     _updateCurrentRecipeWithFilters(){
         this._currentRecipes = this._currentRecipes.filter((recipe) => {
             return this._appliedFilter.some(appliedFilter => {
-                const ingredientsMatch = recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase() === appliedFilter)
+                const ingredientsMatch = recipe.ingredients.some(ingredient => ingredient.toLowerCase() === appliedFilter)
                 const applianceMatch = recipe.appliance.toLowerCase() === appliedFilter
                 const ustensilMatch = recipe.ustensils.some(ustensil => ustensil.toLowerCase() === appliedFilter)
                 return ingredientsMatch || applianceMatch || ustensilMatch

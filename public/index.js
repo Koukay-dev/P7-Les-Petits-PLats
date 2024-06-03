@@ -14,7 +14,7 @@ class RecipesApp {
         this._searchBars = document.querySelectorAll('.search-bar')
         this._filtersDOM = document.querySelectorAll('.filterSearch')
         this._appliedFilterWrapper = document.getElementById('appliedFilters')
-        this._search = new Search(this._recipes, this._searchBars, this._appliedFilterWrapper)
+        this._search = new Search(this._recipes, this._appliedFilterWrapper)
     }
 
     init(){
@@ -51,7 +51,7 @@ class RecipesApp {
                 input.addEventListener('input',()=>{
                     if(input.value.length >= 3){
                         this._updateDomRecipes(this._search.search(input.value))
-                    } else {
+                    } else if(input.value.length == 0) {
                         this._updateDomRecipes(this._search.search(''))
                     }
                 })
@@ -63,16 +63,36 @@ class RecipesApp {
         })
     }
 
+
     _addFiltersEvent(){
         this._filtersDOM.forEach((filterDOM) => {
             new FiltersUtils(filterDOM)
-
+            
+            const autocompleteList = filterDOM.querySelector('.autocomplete')
             const searchBar  = filterDOM.querySelector('.search-bar')
             const input = searchBar.querySelector('input')
             var filterType = searchBar.dataset.filtertype
         
             input.addEventListener('input', () => this._search.filterSearch(input.value, filterDOM, filterType))
+
             searchBar.querySelector('.input-cross').addEventListener('click',() => this._search.filterSearch('', filterDOM, filterType))
+
+            autocompleteList.addEventListener('click',(event) => {
+                if(event.target && event.target.nodeName == 'LI'){
+                    var targettedFilter = event.target.textContent
+                    this._updateDomRecipes(this._search.addFilter(targettedFilter, filterDOM))
+                }
+            })
+        })
+
+        this._appliedFilterWrapper.addEventListener('click', (event) => {
+            if(event.target && event.target.dataset.btn === 'remove'){
+                var targettedFilter = event.target.closest('li').dataset.filtername
+                if(targettedFilter){
+                    this._updateDomRecipes(this._search.removeFilter(targettedFilter))
+                }
+
+            }
         })
     }
 

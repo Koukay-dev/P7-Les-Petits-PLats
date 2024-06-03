@@ -14,6 +14,8 @@ export class SearchEngine {
             ustensils: this._filtersUstensils 
         }
 
+        this._lastQuery = ''
+
         this._initFiltersList()
     }
 
@@ -38,26 +40,26 @@ export class SearchEngine {
     }
 
     addFilter(filter){
-        if(!this._appliedFilter.includes(filter.toLowerCase())){
-            this._appliedFilter.push(filter.toLowerCase())
-            this.updateCurrentRecipeWithFilters() //Mets à jour this._currentRecipes 
+        filter = filter.toLowerCase()
+        if(!this._appliedFilter.includes(filter)){
+            this._appliedFilter.push(filter)
+            this._updateCurrentRecipeWithFilters() //Mets à jour this._currentRecipes 
         }
         
     }
 
     removeFilter(filterToRemove){
-        this._appliedFilter = this._appliedFilter.filter((appliedFilter) => appliedFilter !== filterToRemove)
+        this._appliedFilter = this._appliedFilter.filter((appliedFilter) => appliedFilter !== filterToRemove.toLowerCase())
 
-        if(this._appliedFilter.length === 0){ //Mets à jour this._currentRecipes
-            this.resetCurrentRecipes()
-        }else{
-            this.updateCurrentRecipeWithFilters()  
-        }
-        
+        //Mets à jour this._currentRecipes
+        this.resetCurrentRecipes()
+        this._updateCurrentRecipeWithFilters()
+        this.search(this._lastQuery)     
     }
 
     search(query){
         // La recherche se fait sur le titre, la description, et les ingredients
+        this._lastQuery = query
         query = query.toLowerCase()
         this._currentRecipes = this._currentRecipes.filter((recipe) => {
             const nameMatch = recipe.name.toLowerCase().includes(query)
@@ -67,6 +69,7 @@ export class SearchEngine {
             )
             return nameMatch || descriptionMatch || ingredientsMatch
         })
+        this._updateCurrentRecipeWithFilters()
         return this._currentRecipes
     }
 
@@ -114,10 +117,12 @@ export class SearchEngine {
 
     _updateCurrentRecipeWithFilters(){
         this._currentRecipes = this._currentRecipes.filter((recipe) => {
-            return this._appliedFilter.some(appliedFilter => {
-                const ingredientsMatch = recipe.ingredients.some(ingredient => ingredient.toLowerCase() === appliedFilter)
+            return this._appliedFilter.every(appliedFilter => {
+
+                const ingredientsMatch = recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase() === appliedFilter)
                 const applianceMatch = recipe.appliance.toLowerCase() === appliedFilter
                 const ustensilMatch = recipe.ustensils.some(ustensil => ustensil.toLowerCase() === appliedFilter)
+
                 return ingredientsMatch || applianceMatch || ustensilMatch
             })          
         })

@@ -25,7 +25,9 @@ export class Search {
         if (query === '') {
             this._engine.resetCurrentRecipes()
         }
-        return this._engine.search(query)
+        const results = this._engine.search(query)
+        this._autocompleteUI.updateFilters(this._engine.allFilters)
+        return results
     }
 
 
@@ -37,20 +39,27 @@ export class Search {
             const matchedFilter = this._autocompleteUI.search(query, filtertype)
             this._autocompleteUI.appendToDOM(autocompleteDOM, matchedFilter)
         } else {
-            this._autocompleteUI.appendToDOM(autocompleteDOM, [])
+            this._autocompleteUI.appendToDOM(autocompleteDOM, [], filtertype)
         }
     }
 
-    addFilter(filter, filterDOM) {
+    addFilter(filter, filterDOM, filtertype) {
         this._engine.addFilter(filter)
+
+        this._autocompleteUI.updateFilters(this._engine.allFilters)
         this._autocompleteUI.addAppliedFilter(filter, filterDOM)
+        this._autocompleteUI.appendToDOM(filterDOM.querySelector('.autocomplete'), [], filtertype)
+
         this._appliedFilters.addFilter(filter)
         return this._engine.currentRecipes
     }
 
     removeFilter(filter) {
         this._engine.removeFilter(filter)
+
+        this._autocompleteUI.updateFilters(this._engine.allFilters)
         this._autocompleteUI.removeAppliedFilter(filter)
+
         this._appliedFilters.removeFilter(filter)
         return this._engine.currentRecipes
     }

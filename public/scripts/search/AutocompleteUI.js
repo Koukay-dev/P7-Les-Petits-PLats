@@ -1,4 +1,4 @@
-import { DomBaseClass } from "../template/DomBaseClass.js"
+import { DomBaseClass } from '../template/DomBaseClass.js'
 
 export class AutocompleteUI extends DomBaseClass {
     constructor(filters) {
@@ -7,41 +7,57 @@ export class AutocompleteUI extends DomBaseClass {
         this._appliedFilters = []
     }
 
-    removeAppliedFilter(filterToRemove) {
-        this._appliedFilters = this._appliedFilters.filter((appliedFilter) => appliedFilter !== filterToRemove.toLowerCase())
+    updateFilters(filters) {
+        this._filters = filters
+    }
 
+    removeAppliedFilter(filterToRemove) {
+        this._appliedFilters = this._appliedFilters.filter(
+            (appliedFilter) => appliedFilter !== filterToRemove.toLowerCase()
+        )
 
         // Pour update la liste lors de l'ajout
-        
-        const liFilter = document.querySelector(`li[data-appliedfiltername="${filterToRemove}"]`) 
+
+        const liFilter = document.querySelector(
+            `li[data-appliedfiltername="${filterToRemove}"]`
+        )
         const appliedFilters = liFilter.closest('.FilterSearch-appliedFilters')
-        if(liFilter){
+        if (liFilter) {
             appliedFilters.removeChild(liFilter)
         }
     }
 
     addAppliedFilter(filter, FilterDOM) {
-        if(!this._appliedFilters.includes(filter.toLowerCase())){
+        if (!this._appliedFilters.includes(filter.toLowerCase())) {
             this._appliedFilters.push(filter.toLowerCase())
         }
 
         // Pour update la liste lors de l'ajout
         const autocompleteDOM = FilterDOM.querySelector('.autocomplete')
-        const liFilter = autocompleteDOM.querySelector(`li[data-filtername="${filter}"]`) 
-        if(liFilter){
+        const liFilter = autocompleteDOM.querySelector(
+            `li[data-filtername="${filter}"]`
+        )
+        if (liFilter) {
             autocompleteDOM.removeChild(liFilter)
         }
 
-         const appliedFilters = FilterDOM.querySelector('.FilterSearch-appliedFilters')
-         appliedFilters.appendChild(this._convertToHTML(/* html */`<li data-appliedfiltername="${filter}">${filter}</li>`))
+        const appliedFilters = FilterDOM.querySelector(
+            '.FilterSearch-appliedFilters'
+        )
+        appliedFilters.appendChild(
+            this._convertToHTML(
+                /* html */ `<li data-appliedfiltername="${filter}">${filter}</li>`
+            )
+        )
     }
 
-    
-
-    appendToDOM(autocompleteDOM, listFilters){
+    appendToDOM(autocompleteDOM, listFilters, filterType = false) {
         
+        listFilters =
+            listFilters.length === 0 ? this.search('' ,filterType) : listFilters
+        console.log(listFilters)
         const fragment = document.createDocumentFragment()
-        listFilters.forEach(filter => {
+        listFilters.forEach((filter) => {
             const li = /* html */ `
                 <li data-filtername='${filter}'>${filter}</li>
             `
@@ -49,7 +65,6 @@ export class AutocompleteUI extends DomBaseClass {
         })
         autocompleteDOM.innerHTML = ''
         autocompleteDOM.appendChild(fragment)
-        
     }
 
     search(query, filterType) {
@@ -59,12 +74,19 @@ export class AutocompleteUI extends DomBaseClass {
                     (appliedFilter) => appliedFilter === filter.toLowerCase()
                 )
         )
-        return nonAppliedFilters.filter(
-            (filter) => filter.toLowerCase().includes(query.toLowerCase()) 
-        )
+        if(query !== ''){
+           return nonAppliedFilters.filter((filter) =>
+            filter.toLowerCase().includes(query.toLowerCase())
+            ) 
+        }
+        return nonAppliedFilters
+        
     }
-    
+
     _getFiltersbyType(type) {
-        return this._filters[type]
+        if (type) {
+            return this._filters[type]
+        }
+        return []
     }
 }

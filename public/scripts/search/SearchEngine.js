@@ -5,18 +5,12 @@ export class SearchEngine {
         this._currentRecipes = this._recipes
         
         // Liste des Filtres            
-        this._filtersIngredients = []
-        this._filtersAppliance = []
-        this._filtersUstensils = []
-        this._filters = { 
-            ingredients: this._filtersIngredients,
-            appliances: this._filtersAppliance,
-            ustensils: this._filtersUstensils 
-        }
-
+        this._initFilterList()
+        this._updateFiltersList()
+        
         this._lastQuery = ''
 
-        this._initFiltersList()
+        
     }
 
     // ========= Getters =========
@@ -44,6 +38,7 @@ export class SearchEngine {
         if(!this._appliedFilter.includes(filter)){
             this._appliedFilter.push(filter)
             this._updateCurrentRecipeWithFilters() //Mets à jour this._currentRecipes 
+            this._updateFiltersList()
         }
         
     }
@@ -54,6 +49,8 @@ export class SearchEngine {
         //Mets à jour this._currentRecipes
         this.resetCurrentRecipes()
         this._updateCurrentRecipeWithFilters()
+        this._updateFiltersList()
+
         this.search(this._lastQuery)     
     }
 
@@ -70,16 +67,28 @@ export class SearchEngine {
             return nameMatch || descriptionMatch || ingredientsMatch
         })
         this._updateCurrentRecipeWithFilters()
+        this._updateFiltersList()
+
         return this._currentRecipes
     }
 
     
 
     // ========= Private =========
-    
+    _initFilterList(){
+        this._filtersIngredients = []
+        this._filtersAppliance = []
+        this._filtersUstensils = []
+        this._filters = { 
+            ingredients: this._filtersIngredients,
+            appliances: this._filtersAppliance,
+            ustensils: this._filtersUstensils 
+        }
+    }
 
         // initialisation de la liste des filtres
-    _initFiltersList() {
+    _updateFiltersList() {
+        this._initFilterList()
         this._currentRecipes.forEach((recipe) => {
             this._updateIngredientsFilters(recipe)
             this._updateApplianceFilters(recipe)

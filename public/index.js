@@ -14,6 +14,7 @@ class RecipesApp {
         this._searchBars = document.querySelectorAll('.search-bar')
         this._filtersDOM = document.querySelectorAll('.filterSearch')
         this._appliedFilterWrapper = document.getElementById('appliedFilters')
+        this._nothingFoundMsg = document.getElementById('nothingFound')
         this._search = new Search(this._recipes, this._appliedFilterWrapper)
     }
 
@@ -30,13 +31,20 @@ class RecipesApp {
         const fragment = document.createDocumentFragment()
         var recipesFound = recipes.length
         this._updateRecipeNumber(recipesFound)
-        recipes.forEach(recipe => {
+        if(recipesFound !== 0){
+            this._nothingFoundMsg.classList.add('hidden')
+            recipes.forEach(recipe => {
             let recipeNew = new Recipe(recipe)
             let recipeCard = new RecipeCard(recipeNew)
             fragment.appendChild(recipeCard.createThumbnail())
         });
-        this._recipeSection.innerHTML = ''
-        this._recipeSection.appendChild(fragment)
+            this._recipeSection.innerHTML = ''
+            this._recipeSection.appendChild(fragment)
+        } else {
+            this._recipeSection.innerHTML = ''
+            this._nothingFoundMsg.classList.remove('hidden')
+        }
+        
     }
 
 
@@ -72,15 +80,17 @@ class RecipesApp {
             const searchBar  = filterDOM.querySelector('.search-bar')
             const input = searchBar.querySelector('input')
             var filterType = searchBar.dataset.filtertype
-        
+
+            filterDOM.addEventListener('click', () => this._search.filterSearch(input.value, filterDOM, filterType))
             input.addEventListener('input', () => this._search.filterSearch(input.value, filterDOM, filterType))
+            
 
             searchBar.querySelector('.input-cross').addEventListener('click',() => this._search.filterSearch('', filterDOM, filterType))
 
             autocompleteList.addEventListener('click',(event) => {
                 if(event.target && event.target.nodeName == 'LI'){
                     var targettedFilter = event.target.textContent
-                    this._updateDomRecipes(this._search.addFilter(targettedFilter, filterDOM))
+                    this._updateDomRecipes(this._search.addFilter(targettedFilter, filterDOM, filterType))
                 }
             })
         })

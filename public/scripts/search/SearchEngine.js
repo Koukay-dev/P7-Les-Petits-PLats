@@ -61,6 +61,8 @@ export class SearchEngine {
             this.resetCurrentRecipes()
         }
         if(query === ''){
+            this._updateCurrentRecipeWithFilters()
+            this._updateFiltersList()
             return this._currentRecipes
         }
 

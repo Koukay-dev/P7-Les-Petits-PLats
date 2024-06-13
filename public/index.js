@@ -59,7 +59,7 @@ class RecipesApp {
                 input.addEventListener('input',()=>{
                     if(input.value.length >= 3){
                         this._updateDomRecipes(this._search.search(input.value))
-                    } else if(input.value.length == 0) {
+                    } else if(input.value.length < 3) {
                         this._updateDomRecipes(this._search.search(''))
                     }
                 })

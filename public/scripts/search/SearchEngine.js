@@ -54,24 +54,73 @@ export class SearchEngine {
         this.search(this._lastQuery)     
     }
 
+    // Algorithme Principal
     search(query){
         // La recherche se fait sur le titre, la description, et les ingredients
         this._lastQuery = query
         query = query.toLowerCase()
-        this._currentRecipes = this._currentRecipes.filter((recipe) => {
-            const nameMatch = recipe.name.toLowerCase().includes(query)
-            const descriptionMatch = recipe.description.toLowerCase().includes(query)
-            const ingredientsMatch = recipe.ingredients.some(ingredient =>
-                ingredient.ingredient.toLowerCase().includes(query)
-            )
-            return nameMatch || descriptionMatch || ingredientsMatch
-        })
+
+        if(query === ''){
+            return this._currentRecipes
+        }
+        // this._currentRecipes = this._currentRecipes.filter((recipe) => {
+        //     const nameMatch = recipe.name.toLowerCase().includes(query)
+        //     const descriptionMatch = recipe.description.toLowerCase().includes(query)
+        //     const ingredientsMatch = recipe.ingredients.some(ingredient =>
+        //         ingredient.ingredient.toLowerCase().includes(query)
+        //     )
+        //     return nameMatch || descriptionMatch || ingredientsMatch
+        // })
+        let newCurrentRecipes = []
+        let ingredientsMatch = false
+
+        for (let i=0; i < this._currentRecipes.length; i++){
+            let recipe = this._currentRecipes[i]
+
+            const nameMatch = this._textIncludedInString(recipe.name.toLowerCase(), query)
+            const descriptionMatch = this._textIncludedInString(recipe.description.toLowerCase(), query)
+
+            for (let ingredientIndex = 0; ingredientIndex < recipe.ingredients.length; ingredientIndex++){
+                if(this._textIncludedInString(recipe.ingredients[ingredientIndex].ingredient.toLowerCase(),query)){
+                    ingredientsMatch = true
+                    break
+                }
+            }
+
+            if(nameMatch || descriptionMatch || ingredientsMatch){
+                
+                newCurrentRecipes.push(recipe)
+            } 
+        }
+        console.log(this)
+        this._currentRecipes = newCurrentRecipes
+
         this._updateCurrentRecipeWithFilters()
         this._updateFiltersList()
 
         return this._currentRecipes
     }
 
+    _textIncludedInString(FullText, TestString){
+        let charsMatch
+        for(let i=0; i<=FullText.length - TestString.length; i++){
+
+            charsMatch = 0
+            for(let j=0; j < TestString.length; j++){
+                if(FullText[i+j] === TestString[j]){
+                    charsMatch += 1
+
+                    if(charsMatch === TestString.length){
+                        return true
+                    }
+                } else {
+                    break
+                }
+                
+            }
+        }
+        return false
+    }
     
 
     // ========= Private =========

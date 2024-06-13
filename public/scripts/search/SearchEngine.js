@@ -55,6 +55,9 @@ export class SearchEngine {
     }
 
     search(query){
+        if(this._lastQuery.length > query.length){
+            this.resetCurrentRecipes()
+        }
         // La recherche se fait sur le titre, la description, et les ingredients
         this._lastQuery = query
         query = query.toLowerCase()

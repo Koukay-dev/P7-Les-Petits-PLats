@@ -69,14 +69,6 @@ export class SearchEngine {
         this._lastQuery = query
         query = query.toLowerCase()
         
-        // this._currentRecipes = this._currentRecipes.filter((recipe) => {
-        //     const nameMatch = recipe.name.toLowerCase().includes(query)
-        //     const descriptionMatch = recipe.description.toLowerCase().includes(query)
-        //     const ingredientsMatch = recipe.ingredients.some(ingredient =>
-        //         ingredient.ingredient.toLowerCase().includes(query)
-        //     )
-        //     return nameMatch || descriptionMatch || ingredientsMatch
-        // })
         let newCurrentRecipes = []
 
         for (let i=0; i < this._currentRecipes.length; i++){
